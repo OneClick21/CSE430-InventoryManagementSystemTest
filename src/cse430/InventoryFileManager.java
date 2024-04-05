@@ -5,10 +5,10 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class InventoryDatabase {
+public class InventoryFileManager {
     private String fileName;
 
-    public InventoryDatabase(String fileName) {
+    public InventoryFileManager(String fileName) {
         this.fileName = fileName;
     }
 
