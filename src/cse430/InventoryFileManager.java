@@ -54,15 +54,4 @@ public class InventoryFileManager {
             }
         }
     }
-
-    public void restoreInventory(String backupFileName) throws IOException {
-        try (FileInputStream fis = new FileInputStream(backupFileName);
-             FileOutputStream fos = new FileOutputStream(fileName)) {
-            byte[] buffer = new byte[1024];
-            int length;
-            while ((length = fis.read(buffer)) > 0) {
-                fos.write(buffer, 0, length);
-            }
-        }
-    }
 }
