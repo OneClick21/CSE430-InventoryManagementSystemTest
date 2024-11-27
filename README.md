@@ -8,11 +8,8 @@ The Inventory Management System helps businesses manage their stock levels, sale
 
 ## ✨ Features Being Tested
 
-- **Product Management**: Tests for adding, updating, deleting, and viewing products.
-- **Customer Management**: Tests for maintaining customer records, including purchases and returns.
-<!-- - **Transaction Tracking**: Tests for tracking sales and purchase transactions.
-- **Reporting**: Tests for generating inventory levels, sales, and purchase history reports.
-- **Discount Management**: Tests for applying discounts to products based on quantity purchased.
-- **Balance Management**: Tests for managing customer balances and processing returns.
-- **Status Management**: Tests for updating and managing customer status. -->
+- **Customer**: Tests for maintaining customer records, including purchases and returns.
+- **Customer Manager**: Tests for managing customer interactions and handling customer records, including purchases, returns, and overall customer satisfaction.
+- **Employee**: Tests for tracking individual employee sales and purchase transactions.
+- **Employee Manager**: Tests for overseeing employees’ activities and generating reports on inventory levels, sales, and purchase history.
 
