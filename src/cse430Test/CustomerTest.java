@@ -1,8 +1,11 @@
 package cse430Test;
 
-import cse430.*;
+import cse430.Customer;
+import cse430.Product;
+import cse430.CustomerStatus;
 import org.junit.Assert;
 import org.junit.Test;
+
 import java.time.LocalDate;
 import java.util.Map;
 
@@ -87,7 +90,7 @@ public class CustomerTest {
 
     @Test
     public void testSetStatus() {
-//    	customer.setStatus(null);
-        Assert.assertTrue(customer.isRegular());
+    	customer.setStatus(CustomerStatus.ACTIVE);
+        Assert.assertTrue(customer.isActive());
     }
 }

@@ -2,12 +2,6 @@ package cse430;
 
 import java.util.HashMap;
 import java.util.Map;
-enum CustomerStatus {
-    REGULAR,
-    PREMIUM,
-    ACTIVE,
-    INACTIVE
-}
 
 public class Customer {
 	 private int id;
