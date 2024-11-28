@@ -172,6 +172,10 @@ public class Customer {
         return status == CustomerStatus.ACTIVE;
     }
     
+    public boolean isInactive() {
+        return status == CustomerStatus.INACTIVE;
+    }
+    
     public boolean isRegular() {
         return status == CustomerStatus.REGULAR;
     }
