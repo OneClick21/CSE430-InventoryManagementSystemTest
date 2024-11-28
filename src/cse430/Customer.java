@@ -2,12 +2,7 @@ package cse430;
 
 import java.util.HashMap;
 import java.util.Map;
-enum CustomerStatus {
-    REGULAR,
-    PREMIUM,
-    ACTIVE,
-    INACTIVE
-}
+
 public class Customer {
 	 private int id;
 	    private String name;
@@ -172,8 +167,17 @@ public class Customer {
             System.out.println("Insufficient balance.");
         }
     }
+    
     public boolean isActive() {
         return status == CustomerStatus.ACTIVE;
+    }
+    
+    public boolean isInactive() {
+        return status == CustomerStatus.INACTIVE;
+    }
+    
+    public boolean isRegular() {
+        return status == CustomerStatus.REGULAR;
     }
 
 }
