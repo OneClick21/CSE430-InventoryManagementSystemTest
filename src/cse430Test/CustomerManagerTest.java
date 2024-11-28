@@ -3,88 +3,110 @@ package cse430Test;
 import cse430.Customer;
 import cse430.CustomerManager;
 import cse430.CustomerStatus;
+import cse430.Product;
 import org.junit.Assert;
-import org.junit.Test;
 import org.junit.Before;
+import org.junit.Test;
+import java.time.LocalDate;
 
 public class CustomerManagerTest {
-	
-	CustomerManager customerManager;
-	Customer customer1;
-	Customer customer2;
-	Customer customer3;
+	private CustomerManager customerManager;
+	private Customer customer1;
+	private Customer customer2;
 
 	@Before
 	public void setUp() {
 		customerManager = new CustomerManager();
-		customer1 = new Customer(1, "John Doe", "john@example.com", "123 Street");
-		customer2 = new Customer(2, "Jane Doe", "jane@example.com", "456 Avenue");
+		customer1 = new Customer(1, "John Doe", "john.doe@example.com", "123 Main St");
+		customer2 = new Customer(2, "Jane Smith", "jane.smith@example.com", "456 Oak St");
 		customerManager.addCustomer(customer1);
 		customerManager.addCustomer(customer2);
 	}
 
 	@Test
 	public void testAddCustomer() {
-		customer3 = new Customer(3, "Jim Beam", "jim@example.com", "789 Boulevard");
-		customerManager.addCustomer(customer1);
-		customerManager.addCustomer(customer2);
-		customerManager.addCustomer(customer3);
+		Customer newCustomer = new Customer(3, "Alice Johnson", "alice.johnson@example.com", "789 Pine St");
+		customerManager.addCustomer(newCustomer);
 		Assert.assertEquals(3, customerManager.getTotalCustomers());
 	}
 
 	@Test
 	public void testRemoveCustomer() {
-		customerManager.addCustomer(customer1);
-		customerManager.addCustomer(customer2);
-		Assert.assertTrue(customerManager.removeCustomer(1));
+		boolean removed = customerManager.removeCustomer(1);
+		Assert.assertTrue(removed);
+		Assert.assertNull(customerManager.findCustomerById(1));
 		Assert.assertEquals(1, customerManager.getTotalCustomers());
 	}
 
 	@Test
 	public void testFindCustomerById() {
-		Assert.assertEquals(customer1, customerManager.findCustomerById(1));
+		Customer foundCustomer = customerManager.findCustomerById(1);
+		Assert.assertNotNull(foundCustomer);
+		Assert.assertEquals(1, foundCustomer.getId());
 	}
 
 	@Test
 	public void testUpdateCustomerEmail() {
-		Assert.assertTrue(customerManager.updateCustomerEmail(1, "new.email@example.com"));
-		Assert.assertEquals("new.email@example.com", customer1.getEmail());
+		boolean updated = customerManager.updateCustomerEmail(1, "new.email@example.com");
+		Assert.assertTrue(updated);
+		Assert.assertEquals("new.email@example.com", customerManager.findCustomerById(1).getEmail());
 	}
 
 	@Test
 	public void testUpdateCustomerAddress() {
-		Assert.assertTrue(customerManager.updateCustomerAddress(1, "New Address"));
-		Assert.assertEquals("New Address", customer1.getAddress());
+		boolean updated = customerManager.updateCustomerAddress(1, "321 New Address");
+		Assert.assertTrue(updated);
+		Assert.assertEquals("321 New Address", customerManager.findCustomerById(1).getAddress());
 	}
 
 	@Test
-	public void testCalculateTotalCustomerBalance() {
-		Assert.assertEquals(0.0, customerManager.calculateTotalCustomerBalance(), 0.001);
+	public void testGetTotalCustomers() {
+		Assert.assertEquals(2, customerManager.getTotalCustomers());
 	}
 
 //	@Test
-//	public void testFindCustomerWithHighestPurchaseAmount() {
-//		Assert.assertEquals(customer1, customerManager.findCustomerWithHighestPurchaseAmount());
+//	public void testIsPreferredCustomer() {
+//		customer1.addBalance(1000);
+//		Assert.assertTrue(customerManager.isPreferredCustomer(1));
 //	}
 
-//	@Test
-//	public void testUpdateCustomerStatus() {
-//		customer1.setTotalPurchases(600);
-//		customerManager.updateCustomerStatus();
-//		Assert.assertEquals(CustomerStatus.PREMIUM, customer1.getStatus());
-//	}
+	@Test
+	public void testCalculateTotalCustomerBalance() {
+		customer1.addBalance(500);
+		customer2.addBalance(300);
+		Assert.assertEquals(800.0, customerManager.calculateTotalCustomerBalance(), 0);
+	}
+
+	@Test
+	public void testFindCustomerWithHighestPurchaseAmount() {
+		customer1.purchaseItem(new Product(101, "Laptop", 1000, 10, "Elc", LocalDate.of(2024, 12, 31)), 1);
+		customer2.purchaseItem(new Product(102, "Phone", 500, 15, "Elc", LocalDate.of(2024, 12, 31)), 2);
+		Customer highestSpendingCustomer = customerManager.findCustomerWithHighestPurchaseAmount();
+		Assert.assertEquals(customer1, highestSpendingCustomer);
+	}
+
+	@Test
+	public void testUpdateCustomerStatus() {
+		customer1.addBalance(6000);
+		customer2.addBalance(3000);
+		customer1.purchaseItem(new Product(101, "Laptop", 1000, 10, "Elc", LocalDate.of(2024, 12, 31)), 1);
+		customer2.purchaseItem(new Product(102, "Phone", 50, 15, "Elc", LocalDate.of(2024, 12, 31)), 2);
+		customerManager.updateCustomerStatus();
+		Assert.assertEquals(CustomerStatus.PREMIUM, customerManager.findCustomerById(1).getStatus());
+		Assert.assertEquals(CustomerStatus.REGULAR, customerManager.findCustomerById(2).getStatus());
+	}
 
 //	@Test
 //	public void testRemoveInactiveCustomers() {
-//		customer1.isInactive();
+//		customer1.setStatus(CustomerStatus.INACTIVE);
 //		customerManager.removeInactiveCustomers();
 //		Assert.assertEquals(1, customerManager.getTotalCustomers());
 //	}
 
-//	@Test
-//	public void testCalculateAveragePurchaseAmount() {
-//		customer1.setTotalPurchases(500);
-//		customer2.setTotalPurchases(1500);
-//		Assert.assertEquals(1000.0, customerManager.calculateAveragePurchaseAmount(), 0.001);
-//	}
+	@Test
+	public void testCalculateAveragePurchaseAmount() {
+		customer1.purchaseItem(new Product(101, "Laptop", 1000, 10, "Elc", LocalDate.of(2024, 12, 31)), 1);
+		customer2.purchaseItem(new Product(102, "Phone", 500, 15, "Elc", LocalDate.of(2024, 12, 31)), 2);
+		Assert.assertEquals(1000.0, customerManager.calculateAveragePurchaseAmount(), 0);
+	}
 }
