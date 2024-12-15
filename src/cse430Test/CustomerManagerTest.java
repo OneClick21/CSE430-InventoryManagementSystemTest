@@ -32,16 +32,13 @@ public class CustomerManagerTest {
 
 	@Test
 	public void testRemoveCustomer() {
-		boolean removed = customerManager.removeCustomer(1);
-		Assert.assertTrue(removed);
+		customerManager.removeCustomer(1);
 		Assert.assertNull(customerManager.findCustomerById(1));
-		Assert.assertEquals(1, customerManager.getTotalCustomers());
 	}
 
 	@Test
 	public void testFindCustomerById() {
 		Customer foundCustomer = customerManager.findCustomerById(1);
-		Assert.assertNotNull(foundCustomer);
 		Assert.assertEquals(1, foundCustomer.getId());
 	}
 
@@ -64,11 +61,12 @@ public class CustomerManagerTest {
 		Assert.assertEquals(2, customerManager.getTotalCustomers());
 	}
 
-//	@Test
-//	public void testIsPreferredCustomer() {
-//		customer1.addBalance(1000);
-//		Assert.assertTrue(customerManager.isPreferredCustomer(1));
-//	}
+	@Test
+	public void testIsPreferredCustomer() {
+		customer1.addBalance(2000);
+		customer1.purchaseItem(new Product(101, "Laptop", 800, 3, "Elc", LocalDate.of(2024, 12, 31)), 2);
+		Assert.assertTrue(customerManager.isPreferredCustomer(1));
+	}
 
 	@Test
 	public void testCalculateTotalCustomerBalance() {

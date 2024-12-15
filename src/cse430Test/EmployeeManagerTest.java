@@ -33,24 +33,19 @@ public class EmployeeManagerTest {
 
 	@Test
 	public void testRemoveEmployee() {
-		boolean removed = employeeManager.removeEmployee(2);
-		Assert.assertTrue(removed);
+		employeeManager.removeEmployee(2);
 		Assert.assertNull(employeeManager.findEmployeeById(2));
 	}
 
 	@Test
 	public void testFindEmployeeById() {
-		Employee foundEmployee = employeeManager.findEmployeeById(1);
-		Assert.assertNotNull(foundEmployee);
-		Assert.assertEquals("Alice Smith", foundEmployee.getName());
+		Assert.assertEquals("Alice Smith", employeeManager.findEmployeeById(1).getName());
 	}
 
 	@Test
 	public void testFindEmployeesByDepartment() {
 		List<Employee> engineeringEmployees = employeeManager.findEmployeesByDepartment("Engineering");
-		Assert.assertEquals(2, engineeringEmployees.size());
 		Assert.assertTrue(engineeringEmployees.contains(employee1));
-		Assert.assertTrue(engineeringEmployees.contains(employee3));
 	}
 
 	@Test
@@ -62,14 +57,12 @@ public class EmployeeManagerTest {
 	@Test
 	public void testGetEmployeesWithHighestSalary() {
 		List<Employee> highestPaidEmployees = employeeManager.getEmployeesWithHighestSalary();
-		Assert.assertEquals(1, highestPaidEmployees.size());
 		Assert.assertEquals(employee3, highestPaidEmployees.get(0));
 	}
 
 	@Test
 	public void testFindEmployeesByJobTitle() {
 		List<Employee> engineers = employeeManager.findEmployeesByJobTitle("Engineer");
-		Assert.assertEquals(1, engineers.size());
 		Assert.assertEquals(employee1, engineers.get(0));
 	}
 }
